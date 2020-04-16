@@ -1,0 +1,38 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>{{ title }}.</h1>
+<h3>{{ message }}</h3>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12" style="background-color: lightskyblue">
+            <p> D</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3" style="background-color: lightcoral">
+        </div>
+        <div class="col-lg-9" style="background-color: coral">
+            <img src="https://www.melabes.co.il/wp-content/uploads/2019/08/7e7438ffd3de31a0d087da73525232fb.jpg" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4" style="background-color: lightgoldenrodyellow">
+            <p>gas stasion</p>
+        </div>
+        <div class="col-lg-4" style="background-color: lightgreen">
+            <p>This dataset holds all the gas stasion</p>
+        </div>
+        <div class="col-lg-4" style="background-color: green">
+            <p><a href="{{ url_for('DataSet1') }}">Go To DataSet Page</a></p>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
