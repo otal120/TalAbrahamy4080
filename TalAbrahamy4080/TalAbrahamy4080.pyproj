@@ -57,6 +57,7 @@
     <Content Include="TalAbrahamy4080\static\content\bootstrap.min.css" />
     <Content Include="TalAbrahamy4080\static\content\site.css" />
     <Content Include="TalAbrahamy4080\static\Data\gass.xlsx" />
+    <Content Include="TalAbrahamy4080\static\Data\users.csv" />
     <Content Include="TalAbrahamy4080\static\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="TalAbrahamy4080\static\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="TalAbrahamy4080\static\fonts\glyphicons-halflings-regular.ttf" />
