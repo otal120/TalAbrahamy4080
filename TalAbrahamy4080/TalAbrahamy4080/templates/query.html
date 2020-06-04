@@ -2,31 +2,32 @@
 
 {% block content %}
 
-<h2>{{title}}</h2>
+<h1>{{ title }}</h1>
 
 <p>This page will enable the user to input a data field</p>
-
-
+<div class="col-lg-4" style="background-color: lightgoldenrodyellow">
+    <p>Press shift to choose another gas station</p>
+</div>
 <form method=post>
     {{ form.csrf }}
+    {{ form.csrf_token }}
     <table>
         <tr>
-            <td class="input text"> {{ form.name.label }} </td>
-            <td>                    {{ form.name }}       </td>
+            <td class="input text"> {{ form.GasStations.label }} </td>
+            <td>                    {{ form.GasStations }}       </td>
+        </tr>
+        <tr>
+            <td class="input text"> {{ form.City.label }} </td>
+            <td>                    {{ form.City }}       </td>
         </tr>
         <tr>
             <td></td>
-            <td class="input submit"> <input type="submit" value="Capital"> </td>
+            <td class="input submit"> <input type="submit" value="submit"> </td>
         </tr>
     </table>
 </form>
 
-<p><h1>Capital of {{Country}} is : <b>{{name}}</b></h1></p>
-
-<h3> Table is </h3>
-{{ raw_data_table | safe}}
+<img src="{{ chart1 }}" alt="Graph" width="500px" />
 
 
-    {% endblock %}
-
-
+<!--{% endblock %}-->

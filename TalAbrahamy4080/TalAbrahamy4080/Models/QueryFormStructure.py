@@ -7,14 +7,12 @@ from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms import Form, BooleanField, PasswordField
-from wtforms import TextField, TextAreaField, SelectField, DateField
+from wtforms import TextField, TextAreaField, SelectField, DateField, SelectMultipleField
 from wtforms import validators, ValidationError
-
 from wtforms.validators import DataRequired
 ### ----------------------------------------------------------- ###
 
-
-
+# WTFORMS - web to forms
 
 ## This class have the fields that are part of the Country-Capital demonstration
 ## You can see two fields:
@@ -76,5 +74,10 @@ class UserRegistrationFormStructure(FlaskForm):
 #    
 #    submit = SubmitField('Submit')
 
+class GasStationFormStructure(FlaskForm):
+    GasStations = SelectMultipleField('Gas stations: ', choices=[('Sonol', 'Sonol'), ('Ten', 'Ten'),('Dor Alon', 'Dor Alon'),
+                                                        ('Paz', 'Paz'),('Delek', 'Delek'),
+                                                        ('Other', 'Other')], validators= [DataRequired()])
+    City = SelectField('City: ', validators = [DataRequired()])
 
 

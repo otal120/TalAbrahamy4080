@@ -19,6 +19,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+
 import json 
 import requests
 
@@ -35,6 +38,7 @@ from wtforms import ValidationError
 from TalAbrahamy4080.Models.QueryFormStructure import QueryFormStructure 
 from TalAbrahamy4080.Models.QueryFormStructure import LoginFormStructure 
 from TalAbrahamy4080.Models.QueryFormStructure import UserRegistrationFormStructure
+from TalAbrahamy4080.Models.QueryFormStructure import GasStationFormStructure
 from flask_bootstrap import Bootstrap
 bootstrap = Bootstrap(app)
 
@@ -182,8 +186,59 @@ def DataSet2():
         title='Dataset',
         year=datetime.now().year,
         message='Links to the data',
-
     )
+
+@app.route('/query', methods=['GET', 'POST'])
+def query():
+    form = GasStationFormStructure(request.form)
+    df_gass= pd.read_excel(path.join(path.dirname(__file__), "static\\Data\\gass.xlsx"))
+    chart1=""
+    chart2=""
+    
+    #Set the list of states from the data set of all US states
+    cities_choices = df_gass['city'].astype(str).to_list()
+    cities_choices = list(dict.fromkeys(cities_choices))
+    cities_choices = sorted(cities_choices)
+    cities_choices = list(zip(cities_choices, cities_choices)) 
+    form.City.choices = cities_choices
+
+    #plot 
+    if (request.method == 'POST' ):
+        try:
+            df_g = df_gass.drop(['station_number', 'station_name', 'address', 'authorty', 'telephone', 'fax', 'X', 'Y'], 1)
+            companies = form.GasStations.data
+            city = form.City.data
+            df_g = df_g.loc[df_g["company"].isin(companies)]
+            df_g = df_g.loc[df_g["city"] == city]
+            df_g = df_g.groupby('company').size()
+
+            fig1 = plt.figure()
+            ax1 = fig1.add_subplot(111)
+ 
+            df_g.plot(ax=ax1, kind='bar', rot=0, width=0.3, ) 
+            plt.title('Gas stations in %s' % city)
+            plt.style.use('ggplot')
+            chart1 = plot_to_img(fig1)
+        except IndexError:
+            chart = 'https://freeiconshop.com/wp-content/uploads/edd/error-flat.png'
+
+     
+    return render_template('query.html', 
+            form = form, 
+            chart1=chart1,
+            chart2=chart2,
+            title='User Data Query',
+            year=datetime.now().year,
+            message='Please enter the parameters you choose, to analyze the database'
+        )
+
+#פעולה שמעבירה את הגרף לתמונה
+def plot_to_img(fig):
+    pngImage= io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+    pngImageB64String = "data:image/png;base64, "
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+    return pngImageB64String
 
 
 
